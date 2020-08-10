@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace表示命名空间 -->
+<mapper namespace="jee.support.dao.ScoreDao">
+
+	<select id="findByStudentId" resultMap="studentScoreMap">
+
+SELECT
+s.`name`,
+s.`studentId`,
+sc.id,
+sc.score,
+sc.cource,
+sc.teacher,
+sc.studentId
+FROM student s,score sc
+where s.studentId=sc.studentId and s.studentId=#{studentId}
+</select>
+
+
+
+
+
+
+	<!--完成1对1和1对多查询-->
+	<resultMap id="studentScoreMap" type="jee.support.entity.Score">
+		<!--Ticket对象的主键id和ticket表格的主键字段-->
+		<id property="id" column="id" />
+
+		<result property="score" column="score" />
+		<result property="cource" column="cource" />
+		<result property="teacher" column="teacher" />
+		<!--Ticket 和User 为1对1关联-->
+		<!--column设置为要传入select二次查询的参数值-->
+		<association property="student" javaType="jee.support.entity.Student">
+
+		<result property="name" column="name" />
+		<!--Ticket 和Attachment 为1对多关联-->
+		<!--column设置为要传入select二次查询的参数值-->
+		</association>
+	</resultMap>
+
+
+
+
+
+</mapper>
